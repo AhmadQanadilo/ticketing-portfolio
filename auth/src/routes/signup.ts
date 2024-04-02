@@ -37,7 +37,7 @@ router.post(
     try {
       const user = User.build({ email, password });
       await user.save();
-      console.log("User", user);
+      console.log("User created", user);
       res.status(201).send(user);
     } catch (error) {
       console.log(error);
