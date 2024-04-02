@@ -15,7 +15,7 @@ interface UserModel extends mongoose.Model<UserDocument> {
 }
 
 const UserSchema = new mongoose.Schema({
-  emil: {
+  email: {
     type: "string",
     required: true,
   },
