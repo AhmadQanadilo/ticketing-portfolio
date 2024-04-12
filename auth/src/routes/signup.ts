@@ -39,12 +39,13 @@ router.post(
       const user = User.build({ email, password });
       await user.save();
       // genrerate a user jwt token
+    
       const userJwt = jwt.sign(
         {
           id: user.id,
           email: user.email,
         },
-        "test123"
+        process.env.JWT_KEY!
       );
 
       // store the user token in the cookie

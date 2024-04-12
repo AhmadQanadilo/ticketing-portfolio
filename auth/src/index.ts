@@ -33,6 +33,9 @@ app.all("*", async () => {
 app.use(errorHandler);
 
 const start = async () => {
+  if (!process.env.JWT_KEY) {
+    throw new Error("Cant access env variable 'JWT_TOKEN'");
+  }
   try {
     await mongoose.connect("mongodb://auth-mongodb-srv:27017/auth");
 
