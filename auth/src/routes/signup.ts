@@ -4,6 +4,7 @@ import { User } from "../models/user";
 import { RequestValidationError } from "../errors/request-validation-errors";
 import { DatabaseConnectionError } from "../errors/database-connection-errors";
 import { BadRequestError } from "../errors/bad-request-error";
+import jwt from "jsonwebtoken";
 
 const router = express.Router();
 
@@ -37,6 +38,18 @@ router.post(
     try {
       const user = User.build({ email, password });
       await user.save();
+      // genrerate a user jwt token
+      const userJwt = jwt.sign(
+        {
+          id: user.id,
+          email: user.email,
+        },
+        "test123"
+      );
+
+      // store the user token in the cookie
+      req.session = { jwt: userJwt };
+
       console.log("User created", user);
       res.status(201).send(user);
     } catch (error) {
