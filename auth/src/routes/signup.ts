@@ -51,7 +51,6 @@ router.post(
       // store the user token in the cookie
       req.session = { jwt: userJwt };
 
-      console.log("User created", user);
       res.status(201).send(user);
     } catch (error) {
       console.log(error);

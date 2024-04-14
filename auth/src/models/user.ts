@@ -14,16 +14,25 @@ interface UserModel extends mongoose.Model<UserDocument> {
   build(attr: UserAtter): UserDocument;
 }
 
-const UserSchema = new mongoose.Schema({
-  email: {
-    type: "string",
-    required: true,
+const UserSchema = new mongoose.Schema(
+  {
+    email: {
+      type: "string",
+      required: true,
+    },
+    password: {
+      type: "string",
+      required: true,
+    },
   },
-  password: {
-    type: "string",
-    required: true,
-  },
-});
+  {
+    toJSON: {
+      transform(doc, ret) {
+        delete ret.password;
+      },
+    },
+  }
+);
 
 UserSchema.pre("save", async function (done) {
   if (this.isModified("password")) {
