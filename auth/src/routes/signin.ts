@@ -8,7 +8,7 @@ router.post(
   "/api/users/signin",
   [
     body("email").isEmail().withMessage("Please enter a valid email"),
-    body("password").trim().isEmpty().withMessage("Password cannot be empty"),
+    body("password").trim().notEmpty().withMessage("Password cannot be empty"),
   ],
   validateRequest,
 
