@@ -1,9 +1,8 @@
-import express, {Request, Response, NextFunction} from "express";
-import { body, validationResult } from "express-validator";
+import express, { Request, Response } from "express";
+import { body } from "express-validator";
 import { User } from "../models/user";
-import { RequestValidationError } from "../errors/request-validation-errors";
-import { DatabaseConnectionError } from "../errors/database-connection-errors";
 import { BadRequestError } from "../errors/bad-request-error";
+import { validateRequest } from "../middlewares/validate-request";
 import jwt from "jsonwebtoken";
 
 const router = express.Router();
@@ -16,15 +15,8 @@ router.post(
       .trim()
       .isLength({ min: 4, max: 20 })
       .withMessage("Please enter a valid password"),
-    (req: Request, res: Response, next: NextFunction) => {
-      const errors = validationResult(req);
-      if (!errors.isEmpty()) {
-        throw new RequestValidationError(errors.array());
-      }
-      // If validation passes, continue to the next middleware or route handler
-      next();
-    },
   ],
+  validateRequest,
   async (req: Request, res: Response) => {
     const { email, password } = req.body;
 
@@ -39,7 +31,7 @@ router.post(
       const user = User.build({ email, password });
       await user.save();
       // genrerate a user jwt token
-    
+
       const userJwt = jwt.sign(
         {
           id: user.id,
@@ -58,4 +50,4 @@ router.post(
   }
 );
 
-export  {router as signupRouter}
+export { router as signupRouter };
