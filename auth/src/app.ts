@@ -17,7 +17,9 @@ app.use(json());
 app.use(
   cookieSession({
     signed: false,
-    secure: true,
+
+    //this means if we are testing using jest request can be http otherwise https only is premit
+    secure: process.env.NODE_ENV !== "test",
   })
 );
 app.use(currentUserRouter);

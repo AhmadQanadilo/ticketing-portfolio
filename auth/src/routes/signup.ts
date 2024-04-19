@@ -23,7 +23,6 @@ router.post(
     const existingUser = await User.findOne({ email });
 
     if (existingUser) {
-      console.log("User already exists");
       throw new BadRequestError("User already exists");
     }
 
