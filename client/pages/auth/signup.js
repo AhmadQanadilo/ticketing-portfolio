@@ -1,13 +1,24 @@
+import { useState } from "react";
+import useRequest from "../../hooks/useRequest";
+
 const Signup = () => {
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
 
-
+  const onSubmit = (event) => {
+    console.log(event);
+  };
 
   return (
-    <form>
+    <form onSubmit={onSubmit}>
       <label>email</label>
-      <input type="email" />
+      <input value={email} type="email" />
       <label>password</label>
-      <input type="password" />
+      <input value={password} type="password" />
+      <button className="primary" type="submit">
+        {" "}
+        Sign In
+      </button>
     </form>
   );
 };
