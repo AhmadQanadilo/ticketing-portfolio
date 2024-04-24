@@ -1,7 +1,13 @@
 const Signup = () => {
+
+
+
   return (
     <form>
-      <h1>Sign up</h1>
+      <label>email</label>
+      <input type="email" />
+      <label>password</label>
+      <input type="password" />
     </form>
   );
 };
